@@ -1,0 +1,46 @@
+class Test {
+    static int determinante;
+
+    public static int determinanteMatriz(int matriz[][]) {
+        int n = matriz.length;
+        if (n == 2) {
+            return (matriz[0][0] * matriz[1][1]) - (matriz[1][0] * matriz[0][1]);
+        } else {
+            int det = 0;
+            for (int i = 0; i < n; i++) {
+                det += (matriz[0][i] * adj(matriz, 0, i));
+            }
+            return det;
+        }
+    }
+
+    public static int adj(int matriz[][], int i, int j) {
+        int n = matriz.length;
+        int adjunto;
+        int matriz1[][] = new int[n - 1][n - 1];
+        int m, n;
+        for (int k = 0; k < matriz1.length; k++) {
+            if (k < i) {
+                m = k;
+            } else {
+                m = k + 1;
+            }
+            for (int l = 0; l < matriz1.length; l++) {
+                if (l < j) {
+                    n = l;
+                } else {
+                    n = l + 1;
+                }
+                matriz1[k][l] = matriz[m][n];
+            }
+        }
+        adjunto = (int) Math.pow(-1, i + j) * determinanteMatriz(matriz1);
+        return adjunto;
+    }
+
+    public static void main(String[] args) {
+        int matriz_prueba[][] = { { 1, 2, 2, 3 }, { 1, 0, -2, 0 }, { 3, -1, 1, -2 }, { 4, -3, 0, 2 } };
+        determinante = determinanteMatriz(matriz_prueba);
+        System.out.println(determinante);
+    }
+}
